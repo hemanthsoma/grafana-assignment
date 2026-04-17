@@ -106,7 +106,7 @@ SELECT DISTINCT machine_id FROM machine_metrics;
 
 ## 🖼️ Dashboard Preview
 
-![Dashboard](screenshots/dashboard.png)
+![Dashboard](screenshots/part_a.png)
 
 ---
 
@@ -140,7 +140,7 @@ This setup is designed to be easily integrated into a larger system (e.g., CMMS)
 
 * Dashboard JSON: `/dashboards/machine-monitoring-dashboard.json`
 * SQL Setup: `/data/sample_data.sql`
-* Screenshot: `/screenshots/dashboard.png`
+* Screenshot: `/screenshots/part_a.png`
 
 ---
 
