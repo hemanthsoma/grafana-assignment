@@ -10,6 +10,8 @@ The solution is divided into:
 
 * **Part A**: Working Grafana dashboard with PostgreSQL
 * **Part B**: Integration of Grafana into an on-premise CMMS product
+* **Part C**: Engineering Decisions
+* **Part D**: ML Insights Panel Extension (Custom Grafana Plugin)
 
 ---
 
