@@ -616,20 +616,3 @@ This approach enables advanced analytics while maintaining a clean separation be
 [Download / Watch Demo](screenshots/ml_insights_demo.mov)
 
 ---
-
-
-# 📁 Deliverables
-
-* Dashboard JSON: `/dashboards/machine-monitoring-dashboard.json`
-* SQL Setup: `/data/sample_data.sql`
-* Screenshot: `/screenshots/part_a.png`
-
----
-
-# 💡 Notes
-
-* Focused on simplicity, clarity, and production readiness
-* Avoided over-engineering while maintaining scalability
-* Designed with real-world integration scenarios in mind
-
----
