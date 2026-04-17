@@ -324,7 +324,7 @@ Hybrid integration using **Reverse Proxy + iframe embedding**
 
 ### Reasoning:
 
-This approach enables seamless embedding of Grafana dashboards داخل the CMMS UI while maintaining backend control over authentication and access.
+This approach allows Grafana dashboards to be seamlessly embedded within the CMMS UI while maintaining centralized control over authentication and access through the backend.
 
 ### Tradeoff Analysis:
 
