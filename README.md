@@ -446,6 +446,176 @@ Adopt a **multi-tenant architecture with tenant-aware data isolation and scalabl
 
 ---
 
+# 🔹 PART D — ML Insights Panel Extension (Custom Grafana Plugin)
+
+---
+
+## 🎯 Overview
+
+I developed a custom Grafana panel extension called **ML Insights**, designed to provide predictive analytics on system metrics (e.g., CPU usage).
+
+The panel offers two modes:
+
+* **Quick Visuals** → On-demand predictive analysis
+* **Stream Visuals** → Real-time predictive insights
+
+This extends Grafana from a visualization tool into a **predictive monitoring system**.
+
+---
+
+## 🏗️ Architecture
+
+```text
+Grafana Panel (React + TypeScript)
+            ↓ (HTTP / Streaming API)
+FastAPI Backend (ML Inference Layer)
+            ↓
+Machine Learning Models (scikit-learn)
+            ↓
+PostgreSQL / Metric Data
+```
+
+---
+
+## ⚙️ Backend — FastAPI + ML Models
+
+The backend is implemented using FastAPI and serves as an **ML inference layer**.
+
+### Technologies Used:
+
+* FastAPI (API layer)
+* StreamingResponse (real-time updates)
+* scikit-learn:
+
+  * Ridge Regression
+  * Huber Regressor (robust to outliers)
+  * Polynomial Features (trend modeling)
+  * Isolation Forest (anomaly detection)
+
+---
+
+## 🧠 ML Capabilities
+
+### 1. Predictive Analysis
+
+* Forecasts future values of metrics (e.g., CPU usage)
+* Uses regression models for trend prediction
+
+### 2. Anomaly Detection
+
+* Detects unusual spikes or drops in metrics
+* Implemented using Isolation Forest
+
+---
+
+## 📊 Panel Modes
+
+---
+
+### ⚡ Quick Visuals (Batch Prediction)
+
+**Description:**
+
+* Performs on-demand analysis when user loads the panel
+* Returns predictions and anomalies in a single response
+
+**Flow:**
+
+```text
+User → Panel Load → API Call → ML Model → JSON Response → Visualization
+```
+
+**Use Case:**
+
+* Quick insights into system behavior
+* Historical trend analysis
+
+---
+
+### 🔴 Stream Visuals (Real-Time Prediction)
+
+**Description:**
+
+* Provides continuous, real-time predictive insights
+* Uses streaming responses from backend
+
+**Flow:**
+
+```text
+User → Panel → Streaming API → Continuous ML Inference → Live Updates
+```
+
+**Implementation:**
+
+* FastAPI `StreamingResponse` used for pushing updates
+* Simulates real-time monitoring scenarios
+
+**Use Case:**
+
+* Live anomaly detection
+* Real-time system monitoring
+
+---
+
+## 🔄 Data Flow
+
+```text
+Metrics Data → FastAPI → ML Processing → API/Stream Response → Grafana Panel → User
+```
+
+---
+
+## 🎨 Frontend — Grafana Panel (React + TypeScript)
+
+### Responsibilities:
+
+* Provide toggle between **Quick** and **Stream** modes
+* Fetch data from backend APIs
+* Render predictions and anomalies visually
+
+### Features:
+
+* Interactive UI for switching modes
+* Real-time updates for streaming mode
+* Visualization of predicted vs actual values
+
+---
+
+## 🔐 Security & Design Considerations
+
+* Backend abstracts ML logic from frontend
+* No direct database access from Grafana
+* API layer can be secured via token-based authentication
+* Supports integration into enterprise environments
+
+---
+
+## 🚀 Key Benefits
+
+* Adds **predictive intelligence** to Grafana dashboards
+* Enables **real-time anomaly detection**
+* Demonstrates integration of **ML + observability**
+* Keeps architecture modular and scalable
+
+---
+
+## 💡 Summary
+
+The ML Insights panel transforms Grafana into a **proactive monitoring system** by combining:
+
+* Custom panel plugins (React + TypeScript)
+* FastAPI backend for ML inference
+* Real-time streaming and batch prediction modes
+
+This approach enables advanced analytics while maintaining a clean separation between visualization and computation layers.
+
+### ▶️ Full Demo Video
+
+[Download / Watch Demo](screenshots/ml_insights_demo.mov)
+
+---
+
+
 # 📁 Deliverables
 
 * Dashboard JSON: `/dashboards/machine-monitoring-dashboard.json`
