@@ -99,9 +99,6 @@ FROM generate_series(1, 1000);
    * Type: Time Series
    * Supports filtering via machine variable
 
-3. **Average Machine Temperature**
-
-   * Type: Stat Panel
 
 ---
 
