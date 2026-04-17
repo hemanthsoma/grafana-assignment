@@ -312,6 +312,140 @@ User → Access via CMMS → View Insights
 
 ---
 
+# 🔹 PART C — Engineering Decisions
+
+---
+
+## Q1. Integration Approach Rationale
+
+### Selected Approach:
+
+Hybrid integration using **Reverse Proxy + iframe embedding**
+
+### Reasoning:
+
+This approach enables seamless embedding of Grafana dashboards داخل the CMMS UI while maintaining backend control over authentication and access.
+
+### Tradeoff Analysis:
+
+| Approach                        | Pros                              | Cons                                     |
+| ------------------------------- | --------------------------------- | ---------------------------------------- |
+| iframe only                     | Simple to implement               | Weak security, no auth control           |
+| API-based integration           | Full customization                | High complexity, longer development time |
+| Reverse Proxy + iframe (Chosen) | Balanced security, simplicity, UX | Slight setup overhead                    |
+
+### Final Decision:
+
+The hybrid approach provides the best balance between **security, implementation simplicity, and user experience**, making it suitable for both prototype and production environments.
+
+---
+
+## Q2. AGPL License Risk Management
+
+### Problem:
+
+Grafana OSS is licensed under AGPL, which requires source code disclosure if modified and distributed.
+
+### Approach:
+
+* Use Grafana as an **unmodified standalone service**
+* Avoid altering Grafana core code
+* Perform all custom logic in CMMS backend
+
+### Mitigation Strategy:
+
+* Integrate via APIs and embedding only
+* Keep proprietary logic outside Grafana
+
+### Final Decision:
+
+Grafana is treated as an independent service to **avoid AGPL obligations**, ensuring no requirement to disclose proprietary CMMS code.
+
+---
+
+## Q3. 100x Data Growth Scenario
+
+### First Bottleneck:
+
+PostgreSQL performance under large-scale time-series workloads
+
+### Scaling Strategy:
+
+1. **Query Optimization**
+
+   * Add indexes (timestamp, machine_id)
+   * Optimize Grafana queries
+
+2. **Table Partitioning**
+
+   * Partition data by time (daily/monthly)
+
+3. **Time-Series Database Migration**
+
+   * TimescaleDB (PostgreSQL extension)
+   * ClickHouse (high-performance analytics DB)
+
+4. **Data Retention Policies**
+
+   * Archive or delete old data
+   * Keep recent data for fast access
+
+### Tradeoffs:
+
+| Solution           | Pros             | Cons                         |
+| ------------------ | ---------------- | ---------------------------- |
+| PostgreSQL scaling | Simple           | Limited at large scale       |
+| TimescaleDB        | Easy migration   | Slight overhead              |
+| ClickHouse         | High performance | Additional system complexity |
+
+### Final Decision:
+
+Start with PostgreSQL optimization, then migrate to a **time-series optimized database** as data grows.
+
+---
+
+## Q4. SaaS Transition Considerations
+
+### Key Changes:
+
+#### 1. Multi-Tenancy
+
+* Introduce tenant isolation:
+
+  * Shared DB with tenant_id
+  * OR separate DB per tenant
+
+#### 2. Grafana Layer
+
+* Use **Grafana Organizations** for tenant isolation
+
+#### 3. Authentication
+
+* Integrate with centralized Identity Provider (OAuth/SSO)
+
+#### 4. Security
+
+* Enforce tenant-level RBAC
+* API gateway for access control
+
+#### 5. Infrastructure
+
+* Containerization (Docker/Kubernetes)
+* Enable auto-scaling
+
+### Tradeoffs:
+
+| Approach               | Pros             | Cons                   |
+| ---------------------- | ---------------- | ---------------------- |
+| Separate DB per tenant | Strong isolation | Higher cost            |
+| Shared DB              | Cost efficient   | Complex access control |
+
+### Final Decision:
+
+Adopt a **multi-tenant architecture with tenant-aware data isolation and scalable infrastructure**, ensuring both security and cost efficiency.
+
+---
+
 # 📁 Deliverables
 
 * Dashboard JSON: `/dashboards/machine-monitoring-dashboard.json`
